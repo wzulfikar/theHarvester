@@ -1,5 +1,6 @@
 import discovery.DNS as DNS
 import discovery.IPy as IPy
+from lib.wordlists_dir import wordlists_dir
 import os
 import sys
 
@@ -62,9 +63,10 @@ class dns_reverse():
 class dns_force():
 
     def __init__(self, domain, dnsserver, verbose=False):
+        self.wordlists_dir = wordlists_dir.get()
         self.domain = domain
         self.nameserver = dnsserver
-        self.file = "wordlists/dns-big.txt"
+        self.file = self.wordlists_dir + "/dns-big.txt"
         self.subdo = False
         self.verbose = verbose
         try:

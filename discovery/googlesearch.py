@@ -1,5 +1,6 @@
 from discovery.constants import *
 from parsers import myparser
+from lib.wordlists_dir import wordlists_dir
 import requests
 import time
 
@@ -7,6 +8,7 @@ import time
 class search_google:
 
     def __init__(self, word, limit, start):
+        self.wordlists_dir = wordlists_dir.get()
         self.word = word
         self.results = ""
         self.totalresults = ""
@@ -95,7 +97,7 @@ class search_google:
     def append_dorks(self):
         # Wrap in try-except incase filepaths are messed up.
         try:
-            with open('wordlists/dorks.txt', mode='r') as fp:
+            with open(self.wordlists_dir + '/dorks.txt', mode='r') as fp:
                 self.dorks = [dork.strip() for dork in fp]
         except FileNotFoundError as error:
             print(error)

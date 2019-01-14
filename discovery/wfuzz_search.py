@@ -1,3 +1,5 @@
+from lib.wordlists_dir import wordlists_dir
+
 try:
     import wfuzz
 except ImportError as e:
@@ -7,6 +9,7 @@ except ImportError as e:
 class search_wfuzz:
 
     def __init__(self, host):
+        self.wordlists_dir = wordlists_dir.get()
         self.host = host
         self.results = ""
         self.totalresults = ""
@@ -14,7 +17,7 @@ class search_wfuzz:
     def do_search(self):
         print('elo')
         try:
-            for r in wfuzz.fuzz(url="https://"+self.host+"/FUZZ", hc=[404], payloads=[("file", dict(fn="wordlists/general/common.txt"))]):
+            for r in wfuzz.fuzz(url="https://"+self.host+"/FUZZ", hc=[404], payloads=[("file", dict(fn=self.wordlists_dir + "/general/common.txt"))]):
                 print(r)
                 self.results += r
         except Exception as e:
